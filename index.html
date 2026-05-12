@@ -2,10 +2,32 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Adivina el Número</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Mi primer programa en JavaScript</h1>
+    <div class="game-card" id="game-card">
+      <h1>🎯 Adivina el Número</h1>
+      <p class="subtitle">Estoy pensando en un número del 1 al 100...</p>
+
+      <div class="controls">
+        <input
+          type="number"
+          id="inputIntento"
+          min="1"
+          max="100"
+          placeholder="?"
+        />
+        <button id="btnAdivinar">Adivinar</button>
+      </div>
+
+      <p id="mensaje"></p>
+      <p id="contador">Intentos: 0</p>
+      <p id="historial">Historial:</p>
+
+      <button id="btnReiniciar" style="display: none">🔄 Jugar de nuevo</button>
+    </div>
 
     <script src="script.js"></script>
   </body>

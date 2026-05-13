@@ -10,33 +10,46 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background: #1a1129;
   color: #eee;
   padding: 20px;
 }
 
 .game-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(233, 69, 96, 0.3);
+  background: rgba(26, 17, 47, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 107, 157, 0.25);
   border-radius: 20px;
   padding: 40px 30px;
   max-width: 420px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   transition:
     border-color 0.5s,
     box-shadow 0.5s;
+
+  /* Esto mas que nada es para que quede encima del video de fondo */
+  position: relative;
+  z-index: 1;
+}
+
+.game-card:hover {
+  /* Iluminación rosa al pasar el mouse */
+  border-color: rgba(255, 107, 157, 0.8);
+  box-shadow: 0 12px 48px rgba(255, 107, 157, 0.15);
 }
 
 h1 {
-  color: #e94560;
+  color: #ff6b9d;
   font-size: 1.8rem;
   margin-bottom: 8px;
+  text-shadow: 0 2px 10px rgba(255, 107, 157, 0.4);
 }
 
 .subtitle {
-  color: #aaa;
+  color: #fce4ec;
   margin-bottom: 24px;
 }
 
@@ -52,20 +65,16 @@ input {
   font-size: 18px;
   width: 100px;
   text-align: center;
-  border: 2px solid rgba(233, 69, 96, 0.4);
+  border: 2px solid rgba(255, 107, 157, 0.4);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #eee;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
   outline: none;
   transition:
     border-color 0.3s,
     box-shadow 0.3s;
 }
-input:focus {
-  border-color: #e94560;
-  box-shadow: 0 0 12px rgba(233, 69, 96, 0.3);
-}
-/* Ocultar flechas del input numérico */
+/* Ocultar flechas que salen en el cuadro donde colocas los numeros */
 input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -75,49 +84,142 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+input:focus {
+  border-color: #ff6b9d;
+  box-shadow: 0 0 12px rgba(255, 107, 157, 0.4);
+}
+
 button {
   padding: 12px 24px;
   font-size: 18px;
-  background-color: #e94560;
+  background-color: #ff4d6d;
   color: white;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition:
     transform 0.2s,
-    background-color 0.3s;
+    background-color 0.3s,
+    box-shadow 0.2s;
+  font-weight: bold;
 }
+
 button:hover {
-  background-color: #d63d56;
+  background-color: #c9184a;
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(201, 24, 74, 0.4);
 }
+
 button:active {
   transform: translateY(1px);
 }
+
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 #mensaje {
-  font-size: 24px;
-  margin: 20px 0;
-  min-height: 40px;
-  transition: font-size 0.3s;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 15px 0;
+  min-height: 24px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Historial mas ordenado y con sombreado */
+.historial-container {
+  margin-top: 25px;
+  border-top: 1px solid rgba(236, 15, 207, 0.1);
+  padding-top: 20px;
+}
+
+.historial-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #ff6b9d;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.8;
 }
 
 #historial {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #aaa;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  min-height: 30px;
 }
 
+/* Cada número del historial ahora es una burbuja*/
+.history-badge {
+  background: #ff6b9c85;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #eee;
+  animation: fadeIn 0.3s ease;
+}
+/* le da animacion tipo rebote a cada numero del historial */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 #btnReiniciar {
-  background-color: #0f3460;
+  /* Morado profundo para diferenciarlo del botón principal */
+  background-color: #ff6b9cc9;
   margin-top: 12px;
 }
 
+#btnReiniciar:hover {
+  background-color: #800f2f;
+}
+
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+
+.volume-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.volume-container:hover {
+  opacity: 1;
+}
+
+/* Estilo para el slider (barra de volumen) */
+#volumenControl {
+  width: 100px;
+  cursor: pointer;
+  accent-color: #ff6b9d; /* Color rosa neón para el control */
+}
+
+.volume-container span {
+  font-size: 0.8rem;
+}
+/* --- Responsive --- */
 @media (max-width: 480px) {
   .game-card {
     padding: 30px 20px;
